@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.properties import ObjectProperty, ListProperty, StringProperty
 from kivy.event import EventDispatcher
 from kivy.uix.gridlayout import GridLayout
+from csv import reader, writer
 
 
 KV = '''
@@ -109,6 +110,22 @@ class Tutorial(App):
 
     def build(self):
         return Builder.load_string(KV)
+
+    def on_start(self):
+        with open('tasks.csv') as f:
+            csv_file = reader(f)
+            for row in csv_file:
+                self.todos.append(
+                    Task(
+                        title=row[0],
+                        importance=row[1],
+                        date=row[2]))
+
+    def on_stop(self):
+        with open('tasks.csv', 'w') as f:
+            csv_file = writer(f)
+            for t in self.todos:
+                csv_file.writerow((t.title, t.importance, t.date))
 
     def new_task(self, *args):
         return Task()
