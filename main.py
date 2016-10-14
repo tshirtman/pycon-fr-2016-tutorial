@@ -1,25 +1,25 @@
 from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.popup import Popup
 from kivy.lang import Builder
 
 
 KV = '''
-Button:
-    text: 'push me'
-    on_press: app.hello()
+ScreenManager:
+    Screen:
+        name: 'hello'
+        Button:
+            text: 'push me'
+            on_press: root.current = 'world'
+
+    Screen:
+        name: 'world'
+        Label:
+            text: 'world'
 '''
 
 
 class Tutorial(App):
     def build(self):
         return Builder.load_string(KV)
-
-    def hello(self, *args):
-        p = Popup(title='hello pycon', size_hint=(.5, .5))
-        p.add_widget(Button(text='close', on_press=p.dismiss))
-        p.open()
-
 
 if __name__ == '__main__':
     Tutorial().run()
