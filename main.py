@@ -1,11 +1,19 @@
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
+from kivy.lang import Builder
+
+
+KV = '''
+Button:
+    text: 'push me'
+    on_press: app.hello()
+'''
 
 
 class Tutorial(App):
     def build(self):
-        return Button(text='push me', on_press=self.hello)
+        return Builder.load_string(KV)
 
     def hello(self, *args):
         p = Popup(title='hello pycon', size_hint=(.5, .5))
