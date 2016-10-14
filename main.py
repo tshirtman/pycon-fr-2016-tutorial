@@ -1,16 +1,16 @@
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.popup import Popup
 
 
 class Tutorial(App):
     def build(self):
-        b = Button(text='push me')
-        b.bind(on_press=self.hello)
-
-        return b
+        return Button(text='push me', on_press=self.hello)
 
     def hello(self, *args):
-        print "hello pycon"
+        p = Popup(title='hello pycon', size_hint=(.5, .5))
+        p.add_widget(Button(text='close', on_press=p.dismiss))
+        p.open()
 
 
 if __name__ == '__main__':
